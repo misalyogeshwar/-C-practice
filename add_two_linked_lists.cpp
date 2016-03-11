@@ -32,20 +32,61 @@ void display(struct node*temp)
         temp = temp->next;
     }
 }
+
+void display_special(struct node *temp)
+{
+    if (temp->next!=NULL)
+        display_special(temp->next);
+
+    cout << "\t"<<temp->data;
+}
 void add_two_list(struct node* list1,struct node* list2, struct node ** res)
 {
 int i = 0;
-    while (i < 3) //&& - logical and  & - bitwise and
+int carry = 0;
+int flag = 0;
+ //   while (list1->next != NULL or list2->next != NULL or carry  > 0) //&& - logical and  & - bitwise and
+   while( i <4)
     {
-        cout<<"inside**********\n";
+        int sum = 0;
 
-        struct node *new_node = create_new_node(list1->data + list2->data);
+        if(list1->next != NULL and list2->next!=NULL)
+            sum = list1->data + list2->data+ carry;
+        else if(list1->next == NULL and list2->next != NULL)
+            sum = list2->data + carry;
+        else if(list2->next == NULL and list1->next!=NULL)
+            sum = list1->data + carry;
+        else
+        {   sum = carry;
+            if (flag == 1)
+            {
+                carry = 0;
+            }
+
+        }
+
+        if (sum > 10)
+        {
+            int total;
+            total = sum;
+            sum = sum%10;
+            carry = total/10;
+        }
+        else if(sum == 10)
+        {
+            sum = 0;
+            carry = 1;
+            flag =1;
+        }
+        else{carry = 0;
+            }
+
+        struct node *new_node = create_new_node(sum);
+           new_node->next = (*res);
+        (*res) = new_node;
         list1 = list1 -> next;
         list2 = list2 -> next;
-        new_node->next = (*res);
-        (*res) = new_node;
-        i++;
-
+    i++;
     }
 }
 int main() {
@@ -58,20 +99,21 @@ int main() {
 
     struct node*res = new node;
     res->next = NULL;
-    push(&head1,1);
-    push(&head1,2);
-    push(&head1,3);
+    push(&head1,4);
+    push(&head1,5);
+    push(&head1,5);
 
-    push(&head2,4);
-    push(&head2,5);
     push(&head2,6);
+    push(&head2,7);
+    push(&head2,7);
     cout<<"\n \tFirst list is  : ";
     display(head1);
     cout<<"\n\tsecond list is  : ";
     display(head2);
 
     add_two_list(head1,head2,&res);
-    cout<<"\n\tresult list is  : ";
+      cout<<"\n\t                      ________________________";
+    cout<<"\n\n\tresult list is  : ";
     display(res);
 
 //    while(1)
