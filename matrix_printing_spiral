@@ -1,0 +1,64 @@
+#include <iostream>
+
+using namespace std;
+
+void print_spiral(int r, int c, int mat[4][5])
+{
+    cout << " \n\nSpiral order : \n\n";
+    int q = 0;
+    int b = 0;
+    int i = 0;
+// r - ending row index
+// c -ending col index
+// q - starting row index
+// b - starting col index
+// i  - iterator
+    while( q < r && b < c)
+    {
+        //print first row
+        for(i = b ; i < c ; i++)
+        {
+            cout << "\t" << mat[q][i];
+        }
+        // print last column
+        for( i = q+1; i < r ; i++)
+        {
+            cout << "\t" << mat[i][c-1];
+        }
+        // print last row backwards
+        for ( i = c-2; i >= b ; i--)
+        {
+            cout << "\t" << mat[r-1][i];
+        }
+        // print first column upwards
+        for ( i = r-2 ; i >= q+1 ; i--)
+        {
+            cout << "\t" << mat[i][b];
+        }
+
+        b = b+1;
+        c = c-1;
+        r = r-1;
+        q = q+1;
+    }
+
+}
+
+int main()
+{
+    cout << "Hello world!" << endl;
+    int mat_a[4][5] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+
+    for(int i = 0; i < 4 ; i++)
+    {
+        cout << "\n";
+        for(int j = 0 ; j< 5 ; j++)
+        {
+            cout << "\t" << mat_a[i][j];
+        }
+    }
+
+    print_spiral(4,5,mat_a);
+
+    return 0;
+}
