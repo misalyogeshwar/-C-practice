@@ -1,0 +1,125 @@
+#include <iostream>
+
+using namespace std;
+
+struct node
+{
+    int data;
+    struct node* next;
+};
+
+node * create_new_node(int data)
+{
+    node * temp= new node();
+    temp->data = data;
+    temp->next = NULL;
+    return temp;
+}
+
+void insertop(node **head_ref,int data)
+{
+    node * new_node;
+    if(*head_ref == NULL)
+    {
+        new_node = create_new_node(data);
+        *head_ref = new_node;
+    }
+    else
+    {
+        node * temp = *head_ref;
+        while(temp->next != NULL)
+            temp = temp->next;
+        new_node = create_new_node(data);
+        temp->next = new_node;
+    }
+
+}
+
+void display(node * head)
+{
+    node *temp;
+    temp = head;
+    cout << "\n\nDisplaying Linked list : ";
+    while(temp->next != NULL)
+    {
+        cout << "\t" << temp->data;
+        temp = temp->next;
+    }
+    cout << "\t" << temp->data;
+}
+
+void searchop(node **head_ref,int key)
+{
+    node * temp = *head_ref;
+    int found = 0;
+    while(temp->next != NULL)
+    {
+        if(temp->data == key )
+        {
+            cout <<"\n Key found";
+            found=1;
+            break;
+        }
+        else
+        {
+            temp = temp->next;
+        }
+    }
+    if(temp->data == key && found == 0)
+        {
+            cout <<"\n Key found";
+        }
+
+}
+
+int deleteop(node **head_ref,int key)
+{
+    node * temp =*head_ref;
+    //delete head
+    if(temp->data == key)
+    {
+        *head_ref = temp->next;
+        return key;
+    }
+    //delete from middle
+    while((temp->next)->next != NULL )
+    {
+        if ((temp->next)->data == key)
+        {
+            temp->next = (temp->next)->next;
+            return key;
+        }
+        temp = temp->next;
+    }
+    //delete tail
+    if((temp->next)->data == key)
+    {
+        temp->next = NULL;
+        return key;
+    }
+    return 0;
+}
+
+int main()
+{
+    cout << "Hello world!" << endl;
+    node * head;
+    head = NULL;
+
+    insertop(&head,9);
+    insertop(&head,1);
+    insertop(&head,2);
+    insertop(&head,3);
+    insertop(&head,4);
+    display(head);
+    searchop(&head,2);
+    int val = deleteop(&head,4);
+    if(val != 0)
+    {
+        cout << "\n\n\t Key "<<val<<" is deleted";
+    }
+    else{ cout <<"\n\n\t Key not found";}
+      display(head);
+    //list display routine
+        return 0;
+}
