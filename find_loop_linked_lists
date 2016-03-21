@@ -1,0 +1,77 @@
+// using flyod's cycle finding algorithm..
+
+#include <iostream>
+
+using namespace std;
+
+struct node
+{
+    int data;
+    struct node * next;
+};
+
+void Insert(node ** head_ref,int data)
+{
+    node * new_node = new node;
+    new_node->data = data;
+    new_node->next = *head_ref;
+    *head_ref  = new_node;
+}
+
+void display(node * temp)
+{
+    cout <<"\n\nDisplaying linked lists : ";
+    while(temp->next)
+    {
+        cout << "\t"<<temp->data;
+        temp=temp->next;
+    }
+    cout << "\t"<<temp->data;
+}
+
+int detect_loop(node *temp)
+{
+    node * slow_ptr = temp, *fast_ptr = temp;
+
+     cout << "\n\tSlow ptr = " << slow_ptr<<" Data = " << slow_ptr->data;
+        cout << "\n\tFast ptr = " << fast_ptr<<" Data = " << fast_ptr->data;
+        cout <<"\n\n";
+    while(slow_ptr != NULL && fast_ptr != NULL && fast_ptr->next != NULL)
+    {
+
+        slow_ptr = slow_ptr->next;
+        fast_ptr = fast_ptr->next->next;
+        cout << "\n\tSlow ptr = " << slow_ptr<<" Data = " << slow_ptr->data;
+        cout << "\n\tFast ptr = " << fast_ptr<<" Data = " << fast_ptr->data;
+        cout <<"\n\n";
+
+        if(slow_ptr == fast_ptr)
+        {
+            cout <<"\n\n LOOP FOUND...";
+            return 1;
+        }
+
+    }
+    return 0;
+}
+int main()
+{
+    cout << "Hello world!" << endl;
+
+    struct node * head;
+    head = NULL;
+
+    Insert(&head,1);
+    Insert(&head,2);
+    Insert(&head,3);
+    Insert(&head,4);
+    Insert(&head,5);
+
+    display(head);
+    //creating loop
+    head->next->next->next->next = head;
+    detect_loop(head);
+
+    return 0;
+}
+
