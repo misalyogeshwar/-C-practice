@@ -1,0 +1,66 @@
+#include <iostream>
+
+using namespace std;
+
+struct node
+{
+    int data;
+    struct node* next;
+};
+
+void Insert(node ** head_ref,int data)
+{
+    node *new_node = new node;
+    new_node->data = data;
+    new_node->next = *head_ref;
+    *head_ref = new_node;
+}
+void display(node * temp)
+{
+    cout << "\n\nDisplaying linked list : ";
+    while(temp->next)
+    {
+        cout << "\t"<<temp->data;
+        temp = temp->next;
+    }
+        cout << "\t"<<temp->data;
+}
+
+void find_middle(node * temp)
+{
+    node *slow_ptr = temp, *fast_ptr = temp;
+    while(slow_ptr!= NULL && fast_ptr!= NULL && fast_ptr->next!= NULL)
+    {
+        slow_ptr = slow_ptr ->next;
+        fast_ptr = fast_ptr->next->next;
+    }
+    cout << "\n\n\t Middle of the list is : "<<slow_ptr->data;
+}
+
+int main()
+{
+    cout << "Hello world!" << endl;
+
+    node * head;
+    head = NULL;
+
+    Insert(&head,1);
+    display(head);
+    find_middle(head);
+
+    Insert(&head,2);
+    display(head);
+    find_middle(head);
+    Insert(&head,3);
+    display(head);
+    find_middle(head);
+    Insert(&head,4);
+
+    display(head);
+    find_middle(head);
+    Insert(&head,5);
+
+    display(head);
+    find_middle(head);
+    return 0;
+}
