@@ -1,0 +1,80 @@
+#include <iostream>
+
+using namespace std;
+
+struct node
+{
+    int data;
+    struct node * next;
+};
+
+node * create_new_node(int val)
+{
+    node * temp = new node;
+    temp->data = val;
+    temp->next = NULL;
+    return temp;
+}
+
+void Insert(node **head_ref,int val)
+{
+    node * new_node = create_new_node( val);
+    new_node->next = *head_ref;
+    *head_ref = new_node;
+}
+
+void Display(node * head)
+{
+    cout << "\n\tLinked list is : ";
+    if (head == NULL)
+        cout << "NULL";
+    else
+    {
+
+
+    while(head->next != NULL)
+    {
+        cout << "\t" << head->data;
+        head = head->next;
+    }
+        cout << "\t" << head->data;
+    }
+}
+
+int findLen_recursive(node * head)
+{
+    if (head==NULL)
+        return 0;
+
+    if (head->next == NULL)
+        return 1;
+    else
+        return 1+findLen_recursive(head->next);
+
+}
+
+int findLen_iterative(node * head)
+{
+    int cnt = 0;
+
+    if(head == NULL)
+        return 0;
+
+    while(head->next != NULL)
+    {
+        cnt++;
+        head = head->next;
+    }
+    return 1+cnt;
+}
+
+int main()
+{
+    struct node *head = NULL;
+    Insert(&head,5);
+    cout << "Hello world!" << endl;
+    Display(head);
+    cout<<"\n\n\tLength of list recursively : " << findLen_recursive(head);
+    cout<<"\n\n\tLength of list iteratively : " << findLen_iterative(head);
+    return 0;
+}
