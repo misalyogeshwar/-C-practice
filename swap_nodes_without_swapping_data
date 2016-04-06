@@ -1,0 +1,103 @@
+#include <iostream>
+
+using namespace std;
+
+struct node
+{
+    int data;
+    struct node * next;
+};
+
+node * create_new_node(int val)
+{
+    node * temp = new node;
+    temp->data = val;
+    temp->next = NULL;
+    return temp;
+}
+
+void Insert(node **head_ref,int val)
+{
+    node * new_node = create_new_node( val);
+    new_node->next = *head_ref;
+    *head_ref = new_node;
+}
+
+void Display(node * head)
+{
+    cout << "\n\tLinked list is : ";
+    if (head == NULL)
+        cout << "NULL";
+    else
+    {
+
+
+    while(head->next != NULL)
+    {
+        cout << "\t" << head->data;
+        head = head->next;
+    }
+        cout << "\t" << head->data;
+    }
+}
+
+void swap_nodes(node **head_ref,int key1, int key2)
+{
+    node *x;
+    node *y;
+    node *prev_x = NULL;
+    node *prev_y = NULL;
+
+    if(key1==key2)
+            return;
+
+    x = *head_ref;
+    while(x && x->data != key1)
+    {
+        prev_x = x;
+        x = x->next;
+    }
+    y = *head_ref;
+    while(y && y->data!= key2)
+    {
+        prev_y = y;
+        y= y->next;
+    }
+
+    if(x==NULL or y==NULL)
+        return;
+
+    if(prev_x != NULL)
+        prev_y->next = x;
+    else
+        *head_ref = y;
+
+    if(prev_y != NULL)
+        prev_y->next = x;
+    else
+        x=*head_ref;
+
+    node *temp = y->next;
+    y->next = x->next;
+    x->next = temp;
+
+}
+
+int main()
+{
+    struct node *head = NULL;
+    Insert(&head,8);
+    Insert(&head,7);
+    Insert(&head,6);
+    Insert(&head,5);
+    Insert(&head,4);
+    Insert(&head,3);
+    Insert(&head,2);
+    Insert(&head,1);
+
+    cout << "Hello world!" << endl;
+    Display(head);
+    swap_nodes(&head,1,8);
+    Display(head);
+    return 0;
+}
