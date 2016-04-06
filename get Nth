@@ -1,0 +1,74 @@
+#include <iostream>
+
+using namespace std;
+
+struct node
+{
+    int data;
+    struct node * next;
+};
+
+node * create_new_node(int val)
+{
+    node * temp = new node;
+    temp->data = val;
+    temp->next = NULL;
+    return temp;
+}
+
+void Insert(node **head_ref,int val)
+{
+    node * new_node = create_new_node( val);
+    new_node->next = *head_ref;
+    *head_ref = new_node;
+}
+
+void Display(node * head)
+{
+    cout << "\n\tLinked list is : ";
+    if (head == NULL)
+        cout << "NULL";
+    else
+    {
+
+
+    while(head->next != NULL)
+    {
+        cout << "\t" << head->data;
+        head = head->next;
+    }
+        cout << "\t" << head->data;
+    }
+}
+
+int getnth(node *head,int n)
+{
+    int cnt = 1;
+    while(head!=NULL && cnt < n)
+    {
+        head = head->next;
+        cnt++;
+    }
+    if(head == NULL)
+        return -999;
+    else
+        return head->data;
+}
+
+int main()
+{
+    struct node *head = NULL;
+    Insert(&head,85);
+    Insert(&head,77);
+    Insert(&head,6);
+    Insert(&head,51);
+    Insert(&head,44);
+    Insert(&head,38);
+    Insert(&head,26);
+    Insert(&head,11);
+
+    cout << "Hello world!" << endl;
+    Display(head);
+    cout << "\n\t Asked data  = " << getnth(head,6);
+    return 0;
+}
