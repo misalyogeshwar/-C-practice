@@ -1,0 +1,98 @@
+#include <iostream>
+#include <cassert>
+
+using namespace std;
+
+struct node
+{
+    int data;
+    struct node * next;
+};
+
+node * create_new_node(int val)
+{
+    node * temp = new node;
+    temp->data = val;
+    temp->next = NULL;
+    return temp;
+}
+
+void Insert(node **head_ref,int val)
+{
+    node * new_node = create_new_node( val);
+    new_node->next = *head_ref;
+    *head_ref = new_node;
+}
+
+void Display(node * head)
+{
+    cout << "\n\tLinked list is : ";
+    if (head == NULL)
+        cout << "NULL";
+    else
+    {
+
+
+    while(head->next != NULL)
+    {
+        cout << "\t" << head->data;
+        head = head->next;
+    }
+        cout << "\t" << head->data;
+    }
+}
+
+int get_middle(node *head)
+{
+    node *slow_ptr = head;
+    node *fast_ptr = head;
+
+    while(fast_ptr!= NULL && fast_ptr->next!= NULL)
+    {
+      //  cout << "\n\tFast pointer : " << fast_ptr->data;
+      //  cout << "\n\tslow pointer : " << slow_ptr->data;
+        fast_ptr = fast_ptr->next->next;
+        slow_ptr = slow_ptr->next;
+    }
+    return slow_ptr->data;
+}
+
+int get_middle2(node *head)
+{
+    int cnt = 0;
+    node *move_ptr = head;
+    node *mid = head;
+    while(head!= NULL)
+    {
+        while(move_ptr != NULL)
+        {
+            move_ptr = move_ptr->next;
+            cnt++;
+            if( cnt&1)
+            {
+                mid = mid->next;
+            }
+        }
+    return mid->data;
+    }
+    return 0;
+}
+int main()
+{
+    struct node *head = NULL;
+    Insert(&head,85);
+    Insert(&head,77);
+    Insert(&head,6);
+    Insert(&head,51);
+    Insert(&head,44);
+    Insert(&head,38);
+    Insert(&head,26);
+    Insert(&head,11);
+
+    cout << "Hello world!" << endl;
+    Display(head);
+    cout << "\n\t Middle of list = " << get_middle(head);
+    cout << "\n\t Middle of list by method2 = " << get_middle2(head);
+
+    return 0;
+}
