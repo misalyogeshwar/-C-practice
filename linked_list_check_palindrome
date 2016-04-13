@@ -1,0 +1,85 @@
+#include <iostream>
+#include <cassert>
+#include <stdlib.h>
+
+using namespace std;
+
+struct node
+{
+    int data;
+    struct node * next;
+};
+
+node * create_new_node(int val)
+{
+    node * temp = new node;
+    temp->data = val;
+    temp->next = NULL;
+    return temp;
+}
+
+void Insert(node **head_ref,int val)
+{
+    node * new_node = create_new_node( val);
+    new_node->next = *head_ref;
+    *head_ref = new_node;
+}
+
+void Display(node * head)
+{
+    cout << "\n\tLinked list is : ";
+    if (head == NULL)
+        cout << "NULL";
+    else
+    {
+
+
+    while(head->next != NULL)
+    {
+        cout << "\t" << head->data;
+        head = head->next;
+    }
+        cout << "\t" << head->data;
+    }
+}
+
+void detect_loop(node * head)
+{
+    node * slow_ptr = head;
+    node * fast_ptr = head;
+
+    if (head == NULL)
+        return;
+
+    while(fast_ptr != NULL && fast_ptr->next != NULL)
+    {
+
+        slow_ptr = slow_ptr->next;
+        fast_ptr = fast_ptr->next->next;
+        if (slow_ptr==fast_ptr)
+        {
+            cout <<"\n\t Loop detected at " << slow_ptr->data;
+            return;
+        }
+
+    }
+        cout<<"\n\t No loop present";
+}
+int main()
+{
+    struct node *head = NULL;
+    Insert(&head,85);
+    Insert(&head,77);
+    Insert(&head,6);
+    Insert(&head,51);
+    Insert(&head,44);
+    Insert(&head,38);
+    Insert(&head,26);
+    Insert(&head,11);
+
+    cout << "Hello world!" << endl;
+    Display(head);
+    head->next->next->next->next = head;
+    detect_loop(head);
+    return 0;
+}
