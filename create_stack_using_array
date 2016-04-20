@@ -1,0 +1,64 @@
+#include<iostream>
+#include<limits>
+
+using namespace std;
+
+struct Stack
+{
+   int top;
+   unsigned capacity;
+   int * Array;
+};
+
+Stack * createStack(unsigned cap)
+{
+    Stack * st = new Stack();
+    st->capacity = cap;
+    st->top = -1;
+    st->Array = new int[cap*sizeof(int)];
+    return st;
+}
+
+int isFull(Stack *s)
+{
+    return (s->top == s->capacity -1);
+}
+
+int isEmpty(Stack *s)
+{
+    return (s->top == -1);
+}
+
+void push(Stack * s,int item)
+{
+        if (isFull(s))
+            return;
+        s->Array[++s->top] = item;
+        cout << "\n\t "<<item<<" Pushed to stack";
+}
+
+int pop(Stack * s)
+{
+    if(isEmpty(s))
+        return INT_MIN;
+    else
+        return s->Array[s->top--];
+}
+
+int main(void)
+{
+    struct Stack *st = createStack(100);
+    cout << "\n\tHello World ";
+
+
+    push(st,10);
+     push(st,22);
+      push(st,33);
+cout<<"\n\n";
+    cout <<"\n\t "<< pop(st) << " popped from stack";
+    cout <<"\n\t "<< pop(st) << " popped from stack";
+    cout <<"\n\t "<< pop(st) << " popped from stack";
+    cout <<"\n\t "<< pop(st) << " popped from stack";
+
+        return 0;
+}
