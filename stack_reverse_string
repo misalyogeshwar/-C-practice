@@ -1,0 +1,63 @@
+#include <iostream>
+#include <limits>
+#include <string.h>
+
+using namespace std;
+
+struct Stack{
+    int top;
+    unsigned capacity;
+    char *Array;
+};
+
+Stack * createStack(unsigned cap){
+    Stack* st = new Stack();
+
+    st->capacity = cap;
+    st->top = -1;
+    st->Array = new char[cap * sizeof(char)];
+
+    return st;
+}
+
+int isFull(Stack *s)
+{
+    return s->top == s->capacity - 1;
+}
+
+int isEmpty(Stack *s)
+{
+    return s->top == -1;
+}
+
+void Push(Stack *s , char item){
+    if(isFull(s))
+        return;
+
+    s->Array[++s->top] = item;
+}
+
+char pop(Stack *s){
+    if(isEmpty(s))
+        return CHAR_MIN;
+    return s->Array[s->top--];
+}
+
+void reverse_string(char * exp){
+    Stack *st = createStack(strlen(exp));
+
+    for(int i = 0 ; exp[i];i++)
+        Push(st,exp[i]);
+
+    while(!isEmpty(st))
+        cout << pop(st);
+
+
+}
+int main()
+{
+    cout << "Hello world!" << endl;
+    char exp[] = "yogeshwar";
+    reverse_string(exp);
+    return 0;
+}
