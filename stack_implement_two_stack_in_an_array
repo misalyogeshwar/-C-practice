@@ -1,0 +1,100 @@
+#include <iostream>
+#include <limits.h>
+
+using namespace std;
+
+struct Stack {
+    int top1;
+    int top2;
+    unsigned capacity;
+    int *Array;
+};
+
+Stack * createStack(unsigned cap)
+{
+    Stack * st = new Stack();
+
+    st->top1 = -1;
+    st->top2 = cap;
+    st->capacity = cap;
+    st->Array = new int[cap*sizeof(int)];
+
+    return st;
+}
+
+int isFull1(Stack *s)
+{
+    return s->top1 == s->capacity - 1;
+}
+
+int isFull2(Stack *s)
+{
+    return s->top2 == 0;
+}
+
+int isEmpty1(Stack *s)
+{
+    return s->top1 == -1;
+}
+
+int isEmpty2(Stack *s)
+{
+    return s->top2 == s->capacity;
+}
+
+void push1(Stack *s, int item)
+{
+    if(isFull1(s))
+        return;
+
+    s->Array[++s->top1] = item;
+}
+
+void push2(Stack *s, int item)
+{
+    if(isFull2(s))
+        return;
+
+    s->Array[--s->top2] = item;
+}
+
+int pop1(Stack *s)
+{
+    if(isEmpty1(s))
+        return INT_MIN;
+
+    return s->Array[s->top1--];
+}
+
+int pop2(Stack *s)
+{
+    if(isEmpty2(s))
+        return INT_MIN;
+
+    return s->Array[s->top2++];
+}
+
+int main()
+{
+    cout << "Hello world!" << endl;
+    Stack *s = createStack(10);
+
+    push1(s,11);
+    push1(s,22);
+    push1(s,33);
+
+    push2(s,44);
+    push2(s,45);
+
+    cout << pop1(s);
+    cout << pop1(s);
+    cout << pop1(s);
+
+cout << "\nstack 2\n\n";
+
+    cout << pop2(s);
+    cout << pop2(s);
+
+
+    return 0;
+}
