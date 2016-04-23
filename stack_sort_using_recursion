@@ -1,0 +1,102 @@
+#include <iostream>
+#define STACKSIZE 100
+#include <limits.h>
+
+using namespace std;
+
+struct stack
+{
+    int top;
+    int array[STACKSIZE];
+};
+
+int isFull(stack *s)
+{
+    return s->top == STACKSIZE -1 ;
+}
+
+int isEmpty(stack *s)
+{
+    return s->top == -1;
+}
+
+void push(stack * s , int item)
+{
+    if(isFull(s))
+        return;
+    s->array[++s->top] = item;
+    cout <<"\n\t pushed "<<item<<" into stack";
+}
+
+int pop(stack * s)
+{
+    if(isEmpty(s))
+        return INT_MIN;
+
+    return s->array[s->top--];
+}
+
+void go_down(stack *s , int element)
+{
+    int item;
+
+    if(!isEmpty(s))
+    {
+        item = pop(s);
+        cout <<"\n\t element = " << element << "   item = " << item;
+        if(item < element)
+        {
+            cout << "\n\t element > item so going down with element = " << element;
+            go_down(s,element);
+            push(s,item);
+        }
+        else
+        {
+            push(s,item);
+            push(s,element);
+        }
+    }
+    else
+    {
+        cout <<"\n\t Stack empty ";
+        push(s,element);
+    }
+
+}
+
+void sort_stack(stack *s )
+{
+    int element;
+    if(!isEmpty(s))
+    {
+        element = pop(s);
+    //    cout <<"\n**" << element;
+        cout <<"\n\t came to sort with element = " << element;
+        sort_stack(s);
+        cout << "\n\t Going down with element =  "<< element;
+        go_down(s,element);
+    }
+}
+
+int main()
+{
+    cout << "Hello world!" << endl;
+    stack s;
+    s.top = -1;
+
+    push(&s,1);
+    push(&s,22);
+    push(&s,3);
+    push(&s,44);
+    push(&s,7);
+
+    sort_stack(&s);
+
+    cout << "\n" << pop(&s);
+    cout << "\n" << pop(&s);
+    cout << "\n" << pop(&s);
+    cout << "\n" << pop(&s);
+    cout << "\n" << pop(&s);
+
+    return 0;
+}
