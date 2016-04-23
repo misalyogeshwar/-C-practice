@@ -1,0 +1,82 @@
+#include <iostream>
+#define STACKSIZE 100
+#include <limits.h>
+
+using namespace std;
+
+struct stack
+{
+    int top;
+    int array[STACKSIZE];
+};
+
+int isFull(stack *s)
+{
+    return s->top == STACKSIZE -1 ;
+}
+
+int isEmpty(stack *s)
+{
+    return s->top == -1;
+}
+
+void push(stack * s , int item)
+{
+    if(isFull(s))
+        return;
+    s->array[++s->top] = item;
+}
+
+int pop(stack * s)
+{
+    if(isEmpty(s))
+        return INT_MIN;
+
+    return s->array[s->top--];
+}
+
+void insert_at_bottom(stack *s , int element)
+{
+    int item;
+    if(!isEmpty(s))
+    {
+        item = pop(s);
+        insert_at_bottom(s,element);
+        push(s,item);
+    }
+    else
+       push(s,element);
+
+}
+
+void reverse_stack(stack *s )
+{
+    int element;
+    if(!isEmpty(s))
+    {
+        element = pop(s);
+    //    cout <<"\n**" << element;
+        reverse_stack(s);
+        insert_at_bottom(s,element);
+    }
+}
+
+int main()
+{
+    cout << "Hello world!" << endl;
+    stack s;
+    s.top = -1;
+
+    push(&s,11);
+    push(&s,22);
+    push(&s,33);
+//
+
+    reverse_stack(&s);
+
+    cout << "\n" << pop(&s);
+    cout << "\n" << pop(&s);
+    cout << "\n" << pop(&s);
+
+    return 0;
+}
