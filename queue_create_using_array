@@ -1,0 +1,86 @@
+#include <iostream>
+#include <limits>
+
+using namespace std;
+
+struct Q
+{
+    int front,rear,size;
+    unsigned capacity;
+    int *array;
+};
+
+Q * create_q(unsigned cap)
+{
+    Q * q1 = new Q();
+    q1->front = 0;
+    q1->size  = 0;
+    q1->rear  = cap -1;
+    q1->capacity = cap;
+    q1->array = new int[cap * sizeof(int)];
+    return q1;
+}
+
+int isFull(Q * q)
+{
+    return (q->size == q->capacity);
+}
+
+int isEmpty(Q *q)
+{
+    return (q->size == 0);
+}
+
+void enqueue(Q * q,int item)
+{
+    if(isFull(q))
+        return;
+    q->rear = ((q->rear + 1) % q->capacity);
+    q->array[q->rear] = item;
+    q->size += 1;
+}
+
+int dequeue(Q * q)
+{
+    if(isEmpty(q))
+        return INT_MIN;
+
+    int item = q->array[q->front];
+    q->front = ((q->front + 1)% q->capacity);
+    q->size -= 1;
+    return item;
+}
+
+void get_front(Q *q)
+{
+    cout << "\n\tfront Index = "<<q->front << "  element = " << q->array[q->front];
+}
+
+void get_rear(Q * q)
+{
+    cout << "\n\t rear Index = "<< q->rear << "  element = " << q->array[q->rear];
+}
+
+int main()
+{
+    cout << "Hello world!\n" << endl;
+
+    Q * q1 = create_q(400);
+
+    enqueue(q1,11);
+    enqueue(q1,22);
+    enqueue(q1,33);
+    enqueue(q1,44);
+    enqueue(q1,55);
+
+
+    get_front(q1);
+    get_rear(q1);
+    cout << "\n\t" <<dequeue(q1);
+    enqueue(q1,66);
+     get_front(q1);
+    get_rear(q1);
+
+
+    return 0;
+}
