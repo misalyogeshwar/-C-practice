@@ -1,0 +1,78 @@
+#include <iostream>
+#include <limits.h>
+
+using namespace std;
+
+struct Stack
+{
+    int top;
+    int top2;
+    unsigned capacity;
+    int *Array;
+    int *aux;
+
+};
+
+Stack * createStack(int cap)
+{
+    Stack * st = new Stack();
+    st->top  = -1;
+    st->top2 = -1;
+    st->capacity = cap;
+    st->Array = new int[cap * sizeof(int)];
+    st->aux = new int[cap * sizeof(int)];
+    st->aux[++st->top2] = INT_MAX;
+    return st;
+}
+
+int isFull(Stack *s)
+{
+    return s->top == s->capacity - 1;
+}
+
+int isEmpty(Stack *s)
+{
+    return s->top == -1;
+}
+
+void push(Stack *s , int item)
+{
+    if(isFull(s))
+        return;
+
+    if(item < s->aux[s->top2])
+        s->aux[++s->top2] = item;
+
+    s->Array[++s->top] = item;
+}
+
+int pop(Stack *s)
+{
+    if(isEmpty(s))
+        return INT_MIN;
+    if(s->Array[s->top] == s->aux[s->top2])
+        s->top2--;
+
+    return s->Array[s->top--];
+}
+
+int get_min(Stack *s)
+{
+    return s->aux[s->top2];
+}
+
+int main()
+{
+    cout << "Hello world!" << endl;
+    Stack *st = createStack(100);
+    push(st,1);
+    push(st,20);
+    push(st,30);
+
+    cout << get_min(st)<<endl;
+    cout << pop(st)<<endl;
+    push(st,5);
+
+cout << get_min(st)<<endl;
+    return 0;
+}
