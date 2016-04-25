@@ -23,6 +23,7 @@ Stack * createStack(int cap)
     st->aux = new int[cap * sizeof(int)];
     st->aux[++st->top2] = INT_MAX;
     return st;
+    
 }
 
 int isFull(Stack *s)
