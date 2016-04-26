@@ -1,0 +1,81 @@
+#include <iostream>
+#include <limits>
+
+using namespace std;
+
+
+struct Qnode
+{
+    int key;
+    Qnode * next;
+};
+
+struct Q
+{
+    Qnode * front,*rear;
+};
+
+Q * create_queue()
+{
+    Q *q = new Q();
+    q->front = NULL;
+    q->rear = NULL;
+
+    return q;
+}
+
+Qnode * create_Qnode(int item)
+{
+    Qnode *temp = new Qnode();
+    temp->key = item;
+    temp->next = NULL;
+    return temp;
+}
+
+void enqueue( Q* q, int item)
+{
+    if(q->rear == NULL)
+    {
+            q->rear = create_Qnode(item);
+            q->front = q->rear;
+    }
+    else
+    {
+        Qnode * temp = create_Qnode(item);
+        q->rear->next = temp;
+        q->rear = temp;
+    }
+    cout << "\n\t "<<item<<" enqued ";
+}
+
+int dequeue(Q * q)
+{
+    if(q->front == NULL)
+        return INT_MIN;
+
+    int item = q->front->key;
+    q->front = q->front->next;
+    return item;
+}
+int main()
+{
+    cout << "Hello world!\n" << endl;
+
+    Q * q1 = create_queue();
+
+    enqueue(q1,11);
+    enqueue(q1,22);
+    enqueue(q1,33);
+
+    cout <<"\n\n\t "<<dequeue(q1)<<" dequed";
+    cout <<"\n\n\t "<<dequeue(q1)<<" dequed";
+    enqueue(q1,44);
+    enqueue(q1,55);
+    cout <<"\n\n\t "<<dequeue(q1)<<" dequed";
+enqueue(q1,66);
+    cout <<"\n\n\t "<<dequeue(q1)<<" dequed";
+    cout <<"\n\n\t "<<dequeue(q1)<<" dequed";
+    cout <<"\n\n\t "<<dequeue(q1)<<" dequed";
+
+    return 0;
+}
