@@ -1,0 +1,91 @@
+#include <iostream>
+#include <stack>
+#include <limits>
+
+using namespace std;
+
+struct Q
+{
+    stack <int> s1;
+    stack <int> s2;
+    int front;
+    int rear;
+    unsigned capacity;
+    int size;
+};
+
+Q * create_q(unsigned cap)
+{
+    Q * temp = new Q();
+    temp->front = 0 ;
+    temp->rear = cap;
+    temp->size = 0;
+    temp->capacity = cap;
+    return temp;
+}
+
+int isEmpty(Q *q)
+{
+    return q->size == 0;
+}
+
+int isFull(Q * q)
+{
+    return q->size == q->capacity;
+}
+
+void enqueue(Q * q, int item)
+{
+    if(isFull(q))
+        return;
+
+    q->s1.push(item);
+    q->size += 1;
+    cout << "enqued "<<item<<endl;
+}
+
+int dequeue(Q *q)
+{
+    if(isEmpty(q))
+        return INT_MIN;
+
+    int item,item2,item3;
+
+    if(!q->s2.empty())
+    {
+        item = q->s2.top();
+        q->s2.pop();
+        q->size --;
+        return item;
+    }
+    else
+       {
+            while(!q->s1.empty())
+            {
+                item2 = q->s1.top();
+                q->s1.pop();
+                q->s2.push(item2);
+            }
+            if(!q->s2.empty())
+            {
+                item3 = q->s2.top();
+                q->s2.pop();
+                q->size --;
+                return item3;
+            }
+       }
+}
+int main()
+{
+    cout << "Hello world!" << endl;
+    Q * q = create_q(100);
+
+    enqueue(q,11);
+    enqueue(q,22);
+    enqueue(q,33);
+    cout <<dequeue(q)<<" dequed "<<endl;
+    cout <<dequeue(q)<<" dequed "<<endl;
+    cout <<dequeue(q)<<" dequed "<<endl;
+
+    return 0;
+}
