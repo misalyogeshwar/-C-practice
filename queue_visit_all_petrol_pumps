@@ -1,0 +1,43 @@
+#include <iostream>
+
+using namespace std;
+struct pump
+{
+    int petrol;
+    int distance;
+};
+
+int FindTour(pump pumps[],int size)
+{
+    int start = 0;
+    int end = 1;
+
+    int curr_petrol = pumps[start].petrol - pumps[start].distance;
+    cout <<"\n\t Start = " << start;
+    cout << "\n\n\t curr petrol = "<<curr_petrol<<endl;
+
+    while(start != end)
+    {
+
+        while(curr_petrol < 0 && start!= end)
+        {
+            curr_petrol = curr_petrol - (pumps[start].petrol - pumps[start].distance);
+            start = (start +1)%size;
+        }
+
+        curr_petrol = curr_petrol + (pumps[end].petrol - pumps[end].distance);
+        end  = (end + 1)% size;
+        cout << "\n\n\t curr petrol = "<<curr_petrol<<endl;
+    }
+
+    return start;
+}
+
+int main()
+{
+    cout << "Hello world!" << endl;
+    pump pumps[] = {{6,4},{3,6},{7,3}};
+    int start = FindTour(pumps,(sizeof(pumps)/sizeof(pumps[0])));
+    cout << "start at : " << start;
+    return 0;
+}
