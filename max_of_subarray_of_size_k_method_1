@@ -1,0 +1,30 @@
+#include <iostream>
+
+using namespace std;
+
+void print_max(int * arr,int n,int k)
+{
+
+    int max,j;
+    for(int i = 0; i <= (n-k) ; i++)
+    {   cout << "\n";
+        max = arr[i];
+        for( j = i ; j < i+k ; j++){
+           // cout << "\t"<<arr[j];
+            if (arr[j] >= max)
+                max = arr[j];
+        }
+        cout << max;
+    }
+
+}
+int main()
+{
+    cout << "Hello world!" << endl;
+
+    int arr[] = {8,5,10,7,9,4,15,12,90,13};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    int k = 3;
+    print_max(arr,n,k);
+    return 0;
+}
