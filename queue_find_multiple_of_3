@@ -1,0 +1,125 @@
+#include <iostream>
+#include <queue>
+#include <stdlib.h>
+
+using namespace std;
+
+int compareAsc(const void *a , const void *b )
+{
+    return *(int *)a > *(int *)b;
+}
+
+int populateAux(int *arr,queue<int> * q0,queue <int> * q1,queue<int> * q2,int size)
+{       int i = 0;
+
+        while(!q0->empty())
+        {
+            arr[i++] = q0->front();
+            q0->pop();
+        }
+        while(!q1->empty())
+        {
+            arr[i++] = q1->front();
+            q1->pop();
+        }
+        while(!q2->empty())
+        {
+            arr[i++] = q2->front();
+            q2->pop();
+        }
+
+    return i-1;
+}
+
+
+int find_mul_of_3(int arr[],int size)
+{
+
+    int j = 0;
+
+    for(j = 0; j <size; j++)
+        cout << " "<< arr[j];
+
+    qsort(arr,size,sizeof(int),compareAsc);
+
+    for(j = 0; j <size; j++)
+        cout << " "<< arr[j];
+
+
+    queue <int> q0;
+    queue <int> q1;
+    queue <int> q2;
+
+    //calculate sum and distribute elements a/c to remainder after modulo division
+    int sum = 0;
+
+    for(int i = 0; i <size; i++)
+    {
+        sum = sum + arr[i];
+
+        if(arr[i] % 3 == 0)
+            q0.push(arr[i]);
+        else if(arr[i] % 3 == 1)
+            q1.push(arr[i]);
+        else
+            q2.push(arr[i]);
+    }
+
+    if(sum % 3 == 1)
+    {
+        if(!q1.empty())
+            q1.pop();
+        else
+        {
+            if(q2.empty())
+                return 0;
+            else
+            {
+                q2.pop();
+                if(q2.empty())
+                    return 0;
+                else
+                    q2.pop();
+            }
+        }
+    }
+    else if(sum % 3 == 2 )
+    {
+        if(!q2.empty())
+            q2.pop();
+        else
+        {
+            if(q1.empty())
+                return 0;
+            else
+            {
+                q1.pop();
+                if(q1.empty())
+                    return 0;
+                else
+                    q1.pop();
+            }
+        }
+    }
+
+    int aux[size];
+    int top = populateAux(aux,&q0,&q1,&q2,size);
+    cout <<"\n\n\t";
+    for(j = 0;j < top+1; j++)
+        cout << " "<< aux[j];
+
+    return 1;
+}
+
+int main()
+{
+    cout << "Hello world!" << endl;
+    int arr[] = {8,1,7,6,0};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    int a = find_mul_of_3(arr,n);
+    if( a == 0)
+    {
+        cout << " \n\t Element not possible";
+    }
+    return 0;
+}
