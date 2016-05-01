@@ -1,0 +1,29 @@
+#include <iostream>
+
+using namespace std;
+
+struct node
+{
+    int data;
+    node * left;
+    node * right;
+};
+
+node * create_newNode(int data)
+{
+    node * new_node = new node();
+    new_node->data = data;
+    new_node->left = NULL;
+    new_node->right = NULL;
+    return new_node;
+}
+
+int main()
+{
+    cout << "Hello world!" << endl;
+    node *root = create_newNode(22);
+    root->left = create_newNode(33);
+    root->right = create_newNode(44);
+
+    return 0;
+}
