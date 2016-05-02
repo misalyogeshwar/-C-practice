@@ -1,0 +1,70 @@
+#include <iostream>
+
+using namespace std;
+
+struct node
+{
+    int data;
+    node * left ;
+    node * right;
+};
+
+node * create_new_node(int data)
+{
+    node * newNode = new node();
+    newNode->data = data;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    return newNode;
+}
+
+void printInorder(node * Node)
+{
+    if (Node == NULL)
+        return;
+
+    printInorder(Node->left);
+
+    cout <<"\t" << Node->data;
+
+    printInorder(Node->right);
+
+}
+
+void printPreorder(node * Node)
+{
+    if(Node == NULL)
+        return;
+    cout << "\t" <<Node->data;
+
+    printPreorder(Node->left);
+    printPreorder(Node->right);
+
+}
+
+void printPostorder(node * root)
+{
+    if(root == NULL)
+        return;
+    printPostorder(root->left);
+    printPostorder(root->right);
+    cout << "\t" << root->data;
+}
+int main()
+{
+    cout << "Hello world!" << endl;
+    cout << "\n\n" << endl;
+    node * root = create_new_node(11);
+    root->left = create_new_node(22);
+    root->right = create_new_node(33);
+    root->left->left = create_new_node(44);
+    root->left->right = create_new_node(55);
+
+    //traversals
+    printInorder(root);
+    cout << "\n\n" << endl;
+    printPreorder(root);
+    cout << "\n\n" << endl;
+    printPostorder(root);
+    return 0;
+}
