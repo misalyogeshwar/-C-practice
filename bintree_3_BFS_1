@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+    int data;
+    struct node * left;
+    struct node * right;
+};
+
+struct node * newNode(int data)
+{
+    struct node * temp = (struct node*) malloc(sizeof(struct node));
+    temp->data = data;
+    temp->left = NULL;
+    temp->right = NULL;
+    return temp;
+};
+
+int height(struct node*root)
+{
+    int lh,rh;
+    if(root == NULL)
+        return 0;
+    else
+    {
+        lh = height(root->left);
+        rh = height(root->right);
+        if(lh > rh)
+            return lh +1 ;
+        else
+            return rh + 1;
+    }
+
+}
+
+void print_level(struct node *root,int level)
+{
+    if(root == NULL)
+        return;
+    else if(level == 1)
+    {
+        printf("\t %d",root->data);
+    }
+    else
+    {
+        print_level(root->left,level - 1);
+        print_level(root->right,level - 1);
+    }
+}
+void print_level_order(struct node * root)
+{
+    int i,h = 0;
+    h = height(root);
+    printf("\n\t Height of the tree = %d \n\t",h);
+    for(i = 1 ; i <= h ; i++)
+    {
+        print_level(root,i);
+    }
+}
+
+
+int main()
+{
+    printf("Hello world!\n");
+    struct node * root = newNode(11);
+    root->left = newNode(22);
+    root->right = newNode(33);
+    root->left->left = newNode(44);
+    root->left->right = newNode(55);
+
+    print_level_order(root);
+    printf("\n\n\t");
+    return 0;
+}
