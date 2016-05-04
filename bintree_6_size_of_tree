@@ -1,0 +1,41 @@
+#include <iostream>
+
+using namespace std;
+
+struct node
+{
+    int data;
+    node * left ;
+    node * right;
+
+};
+node * newNode(int data)
+{
+    node * temp = new node();
+    temp->data = data;
+    temp->left = NULL;
+    temp->right = NULL;
+    return temp;
+}
+
+int tree_size(node * tree)
+{
+    if(tree == NULL)
+        return 0;
+    else
+        return (tree_size(tree->left) + 1 + tree_size(tree->right));
+}
+
+int main()
+{
+    cout << "Hello world!" << endl;
+    node * root = newNode(11);
+    root->left = newNode(22);
+    root->right = newNode(33);
+    root->left->left = newNode(44);
+    root->left->right = newNode(55);
+    root->right->right = newNode(55);
+
+    cout <<"\n\t Size of the tree "<<tree_size(root);
+    return 0;
+}
