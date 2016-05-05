@@ -1,0 +1,64 @@
+    #include <iostream>
+
+    using namespace std;
+
+    struct node
+    {
+        int data;
+        node * left ;
+        node * right;
+
+    };
+    node * newNode(int data)
+    {
+        node * temp = new node();
+        temp->data = data;
+        temp->left = NULL;
+        temp->right = NULL;
+        return temp;
+    }
+
+void make_mirror(node *root)
+{
+    if(root == NULL or (root->left == NULL && root->right == NULL))
+        return;
+    else
+    {
+        make_mirror(root->left);
+        make_mirror(root->right);
+        node *temp = root->left;
+        root->left = root->right;
+        root->right = temp;
+    }
+}
+
+void print_inorder(node *root)
+{
+    if(root == NULL)
+        return;
+    else
+    {
+        cout << "\t" << root->data;
+        print_inorder(root->left);
+
+        print_inorder(root->right);
+    }
+}
+
+int main()
+    {
+        cout << "Hello world!" << endl;
+        node * root = newNode(11);
+        root->left = newNode(22);
+        root->right = newNode(33);
+        root->left->left = newNode(44);
+        root->right->left = newNode(66);
+        root->left->right = newNode(55);
+        root->right->right = newNode(77);
+        print_inorder(root);
+
+        make_mirror(root);
+        cout <<"\n\n";
+        print_inorder(root);
+        return 0;
+    }
