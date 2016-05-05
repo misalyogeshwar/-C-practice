@@ -1,0 +1,50 @@
+#include <iostream>
+
+using namespace std;
+
+struct node
+{
+    int data;
+    node * left;
+    node * right;
+};
+
+node * newNode(int data)
+{
+    node *temp = new node();
+    temp->data = data;
+    temp->left = NULL;
+    temp->right = NULL;
+    return temp;
+}
+void print_all_paths(node * root,int *a,int i)
+{
+    if(root == NULL)
+        return;
+    else if (root->left == NULL && root->right == NULL)
+    {
+        for(int j = 0; j<i ; j++)
+            cout <<"\t" << a[j];
+        cout << "\t" << root->data << "\n";
+    }
+    else
+    {
+        a[i++] = root->data;
+        print_all_paths(root->left,a,i);
+        print_all_paths(root->right,a,i);
+    }
+}
+
+int main()
+{
+    cout << "Hello world!" << endl;
+    node * root = newNode(11);
+    root->left = newNode(22);
+    root->right = newNode(33);
+    root->left->left = newNode(44);
+    root->left->right = newNode(55);
+    int a[100];
+    int i = 0;
+    print_all_paths(root,a,i);
+    return 0;
+}
