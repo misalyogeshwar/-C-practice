@@ -1,0 +1,74 @@
+#include <iostream>
+
+using namespace std;
+
+struct node
+{
+    int key;
+    node * left , *right;
+};
+
+node * newNode(int key)
+{
+    node * temp = new node();
+    temp->key = key;
+    temp->left = NULL;
+    temp->right = NULL;
+    return temp;
+}
+
+node * insert(node * Node,int key)
+{
+    if(Node == NULL){ return newNode(key);}
+    else if(key > Node->key)
+        Node->right = insert(Node->right,key);
+    else
+        Node->left = insert(Node->left,key);
+}
+
+void printInorder(node * root)
+{
+    if(root != NULL)
+    {
+        printInorder(root->left);
+        cout << "\t" << root->key;
+        printInorder(root->right);
+    }
+}
+
+void search(node * root,int key)
+{
+    if(root == NULL)
+    {
+        cout << "\n\tKey not found";
+        return;
+    }
+    else if(root->key == key)
+    {
+        cout << "\n\tKey found ";
+        return;
+    }
+    else if(root->key > key)
+        search(root->left,key);
+    else if(root->key < key)
+        search(root->right,key);
+
+}
+int main()
+{
+    cout << "Hello world!" << endl;
+    node * root = NULL;
+    root = insert(root,100);
+    insert(root,78);
+    insert(root,8);
+    insert(root,7);
+    insert(root,4);
+    insert(root,5);
+    insert(root,200);
+    insert(root,150);
+    insert(root,300);
+
+    printInorder(root);
+    search(root,5);
+    return 0;
+}
