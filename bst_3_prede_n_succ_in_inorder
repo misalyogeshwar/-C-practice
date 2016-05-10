@@ -1,0 +1,109 @@
+#include <iostream>
+
+using namespace std;
+
+struct node
+{
+    int key;
+    node *left,*right;
+};
+
+node * newNode(int data)
+{
+    node * temp = new node();
+    temp->key = data;
+    temp->left = NULL;
+    temp->right = NULL;
+    return temp;
+}
+
+node * insert(node *node,int data)
+{
+    if(node == NULL)
+        return newNode(data);
+    else
+    {
+        if(node->key > data)
+            node->left  = insert(node->left,data);
+        else if (node->key < data)
+            node->right = insert(node->right,data);
+    }
+    return node;
+}
+
+void inorder(node *root)
+{
+    if(root == NULL)
+        return;
+    else
+    {
+        inorder(root->left);
+        cout << "\t"<<root->key;
+        inorder(root->right);
+    }
+}
+
+
+void findpresucc(node *root, node* &pre, node* &succ,int key)
+{
+    if (root == NULL)
+        return;
+    else
+    {
+        if(root->key == key)
+        {
+            //succ will be lowest of right subtree
+            if(root->right != NULL)
+            {
+                node *temp = root->right;
+                while(temp->left)
+                    temp = temp->left;
+                succ = temp;
+            }
+            //pre will be highest of left subtree
+            if(root->left != NULL)
+            {
+                node * temp2 = root->left;
+                while(temp2->right)
+                    temp2 = temp2->right;
+                pre = temp2;
+            }
+        }
+        else if (root->key > key)
+        {
+            succ = root;
+            findpresucc(root->left,pre,succ,key);
+        }
+        else
+        {
+            pre = root;
+            findpresucc(root->right,pre,succ,key);
+        }
+    }
+}
+
+int main()
+{
+    cout << "Hello world!" << endl;
+    node *root = newNode(50);
+  insert(root, 30);
+    insert(root, 20);
+    insert(root, 40);
+    insert(root, 70);
+    insert(root, 60);
+    insert(root, 80);
+    inorder(root);
+    node *pre = NULL, *succ = NULL;
+    findpresucc(root,pre,succ,50);
+    if(succ != NULL)
+        cout <<"\n\t Succ is : "<<succ->key;
+    else
+        cout <<"\n\t Succ not present";
+
+    if(pre != NULL)
+        cout <<"\n\t pre  is : "<<pre->key;
+    else
+        cout <<"\n\t pre not present";
+
+    return 0;
+}
